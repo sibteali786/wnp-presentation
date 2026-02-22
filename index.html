@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsNextPlease — Internal Presentation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f172a; font-family: 'Inter', system-ui, sans-serif; color: #f1f5f9; }
+    button { font-family: inherit; }
+    ::-webkit-scrollbar { width: 4px; } 
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // ── SLIDE 1 ────────────────────────────────────────────────
+    const roles = [
+      { icon: "👑", label: "Super User", desc: "Full admin access & system management" },
+      { icon: "🧑‍💼", label: "Task Supervisor", desc: "Oversee workflows & team management" },
+      { icon: "🛠️", label: "Task Agent", desc: "Execute & track assigned tasks" },
+      { icon: "🏢", label: "Client", desc: "Create tasks, track progress & billing" },
+    ];
+
+    const features = [
+      { icon: "🎯", label: "Task Management", desc: "Priority-based tasks with multi-status workflows" },
+      { icon: "📋", label: "Kanban Board", desc: "Visual task board by priority with drag-and-drop editing" },
+      { icon: "📊", label: "Gantt Chart", desc: "Bird's-eye timeline view for project managers" },
+      { icon: "🔍", label: "Advanced Filters", desc: "Custom query builders to find relevant tasks instantly" },
+      { icon: "💬", label: "Real-time Chat", desc: "Integrated messaging with iframe support" },
+      { icon: "🔔", label: "Smart Notifications", desc: "Push notifications & Server-Sent Events" },
+      { icon: "🏢", label: "Client CRM", desc: "Complete client management capabilities" },
+      { icon: "🎨", label: "Skill Matching", desc: "Match tasks with agents by skills" },
+      { icon: "🔐", label: "Role-Based Access", desc: "Granular permissions per role" },
+    ];
+
+    function Slide1() {
+      const [activeTab, setActiveTab] = useState("features");
+      const items = activeTab === "features" ? features : roles;
+      return (
+        <div style={{ padding: "40px", flex: 1, display: "flex", flexDirection: "column" }}>
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
+            <span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "14px" }}>
+              Internal Platform
+            </span>
+            <h1 style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 800, background: "linear-gradient(90deg,#818cf8,#c084fc,#60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "10px", lineHeight: 1.1 }}>
+              WhatsNextPlease
+            </h1>
+            <p style={{ fontSize: "clamp(13px,1.8vw,17px)", color: "#94a3b8", maxWidth: "540px", margin: "0 auto", lineHeight: 1.6 }}>
+              A comprehensive B2B task management platform — streamlining task delegation, client management, and team collaboration.
+            </p>
+          </div>
+
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginBottom: "24px" }}>
+            {["Next.js 14","TypeScript","Express.js","PostgreSQL","AWS ECS","Prisma ORM"].map(t => (
+              <span key={t} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "6px", padding: "4px 12px", fontSize: "11px", color: "#cbd5e1" }}>{t}</span>
+            ))}
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "22px" }}>
+            {["features","roles"].map(tab => (
+              <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "8px 24px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, background: activeTab === tab ? "rgba(99,102,241,0.8)" : "rgba(255,255,255,0.07)", color: activeTab === tab ? "#fff" : "#94a3b8", transition: "all 0.2s" }}>
+                {tab === "features" ? "✨ Key Features" : "👥 User Roles"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "12px", maxWidth: "900px", margin: "0 auto", width: "100%" }}>
+            {items.map((item, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "12px", padding: "16px 14px", transition: "all 0.2s", cursor: "default" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(99,102,241,0.12)"; e.currentTarget.style.borderColor = "rgba(99,102,241,0.4)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
+              >
+                <div style={{ fontSize: "22px", marginBottom: "6px" }}>{item.icon}</div>
+                <div style={{ fontWeight: 700, fontSize: "13px", marginBottom: "4px", color: "#e2e8f0" }}>{item.label}</div>
+                <div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ── SLIDE 2 ────────────────────────────────────────────────
+    function Slide2() {
+      return (
+        <div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "18px" }}>
+          <div>
+            <span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "10px" }}>Dashboard</span>
+            <h2 style={{ fontSize: "clamp(22px,3vw,36px)", fontWeight: 800, background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "6px" }}>
+              Your Command Center
+            </h2>
+            <p style={{ fontSize: "13px", color: "#64748b", maxWidth: "580px", lineHeight: 1.6 }}>
+              The moment you log in, WhatsNextPlease surfaces what matters most — task counts, active clients, messages, and your project timeline. All in one place.
+            </p>
+          </div>
+
+          {/* Main screenshot */}
+          <div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)" }}>
+            <img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ width: "100%", maxHeight: "260px", objectFit: "cover", objectPosition: "top", display: "block" }} />
+            <div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
+              {[["📋 Task Summary","#6366f1"],["💬 Integrated Chat","#8b5cf6"],["👥 Active Clients","#0ea5e9"]].map(([label, color]) => (
+                <span key={label} style={{ background: color, borderRadius: "999px", padding: "3px 10px", fontSize: "10px", fontWeight: 600, color: "#fff", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>{label}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Kanban + Gantt */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+            {[
+              { src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_2.png", label: "📋 Kanban Board", desc: "Visualize every task by status — New, In Progress, Review, Completed, Blocked. Drag and drop to update instantly.", accent: "#818cf8" },
+              { src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_3.png", label: "🗓️ Timeline / Gantt", desc: "See all tasks plotted across a calendar. Spot delays, overlaps, and deadlines at a single glance.", accent: "#c084fc" },
+            ].map(item => (
+              <div key={item.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "12px", overflow: "hidden" }}>
+                <img src={item.src} alt={item.label} style={{ width: "100%", height: "140px", objectFit: "cover", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+                <div style={{ padding: "12px 14px" }}>
+                  <div style={{ fontWeight: 700, fontSize: "13px", color: item.accent, marginBottom: "4px" }}>{item.label}</div>
+                  <p style={{ margin: 0, fontSize: "11px", color: "#64748b", lineHeight: 1.6 }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Quick facts */}
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            {[["⚡","Task counts update in real-time"],["🔀","Switch between Kanban & Timeline instantly"],["🎯","Dashboard content adapts to your role"]].map(([icon, text]) => (
+              <div key={text} style={{ display: "flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "8px 14px", fontSize: "12px", color: "#94a3b8", flex: "1 1 180px" }}>
+                <span style={{ fontSize: "15px" }}>{icon}</span>{text}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ── SHELL ──────────────────────────────────────────────────
+    const slides = [
+      { id: 1, title: "Overview", component: <Slide1 /> },
+      { id: 2, title: "Dashboard", component: <Slide2 /> },
+    ];
+
+    function App() {
+      const [current, setCurrent] = useState(0);
+      const total = slides.length;
+
+      return (
+        <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%)", display: "flex", flexDirection: "column" }}>
+          {/* Top nav */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 28px", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(10px)", position: "sticky", top: 0, zIndex: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontWeight: 800, fontSize: "14px", background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>WhatsNextPlease</span>
+              <span style={{ color: "#334155", fontSize: "12px" }}>— Internal Presentation</span>
+            </div>
+            <div style={{ display: "flex", gap: "6px" }}>
+              {slides.map((s, i) => (
+                <button key={s.id} onClick={() => setCurrent(i)} style={{ padding: "4px 14px", borderRadius: "999px", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: 600, background: current === i ? "rgba(99,102,241,0.8)" : "rgba(255,255,255,0.07)", color: current === i ? "#fff" : "#64748b", transition: "all 0.2s" }}>
+                  {s.title}
+                </button>
+              ))}
+            </div>
+            <span style={{ fontSize: "11px", color: "#334155" }}>{current + 1} / {total}</span>
+          </div>
+
+          {/* Slide */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            {slides[current].component}
+          </div>
+
+          {/* Bottom nav */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 28px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+            <button onClick={() => setCurrent(c => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "8px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: current === 0 ? "#334155" : "#94a3b8", cursor: current === 0 ? "not-allowed" : "pointer", fontSize: "13px" }}>
+              ← Previous
+            </button>
+            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+              {slides.map((_, i) => (
+                <div key={i} onClick={() => setCurrent(i)} style={{ width: i === current ? "20px" : "6px", height: "6px", borderRadius: "999px", background: i === current ? "#6366f1" : "#334155", cursor: "pointer", transition: "all 0.3s" }} />
+              ))}
+            </div>
+            <button onClick={() => setCurrent(c => Math.min(total - 1, c + 1))} disabled={current === total - 1} style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: current === total - 1 ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.8)", color: "#fff", cursor: current === total - 1 ? "not-allowed" : "pointer", fontSize: "13px", fontWeight: 600 }}>
+              Next →
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
