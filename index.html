@@ -130,8 +130,8 @@
 					</div>
 
 					{/* Main screenshot */}
-					<div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)" }}>
-						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ width: "100%", maxHeight: "100%", objectFit: "object-contain", objectPosition: "top", display: "block" }} />
+					<div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", width: 'fit-content' }}>
+						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ maxHeight: "600px", objectFit: "object-contain", objectPosition: "top", display: "block" }} />
 						<div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
 							{[["📋 Task Summary", "#6366f1"], ["💬 Integrated Chat", "#8b5cf6"], ["👥 Active Clients", "#0ea5e9"]].map(([label, color]) => (
 								<span key={label} style={{ background: color, borderRadius: "999px", padding: "3px 10px", fontSize: "10px", fontWeight: 600, color: "#fff", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>{label}</span>
@@ -145,9 +145,9 @@
 							{ src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_2.png", label: "📋 Kanban Board", desc: "Visualize every task by status — New, In Progress, Review, Completed, Blocked. Drag and drop to update instantly.", accent: "#818cf8" },
 							{ src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_3.png", label: "🗓️ Timeline / Gantt", desc: "See all tasks plotted across a calendar. Spot delays, overlaps, and deadlines at a single glance.", accent: "#c084fc" },
 						].map(item => (
-							<div key={item.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "12px", overflow: "hidden" }}>
-								<img src={item.src} alt={item.label} style={{ width: "100%", height: "90%", objectFit: "object-contain", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
-								<div style={{ padding: "12px 14px", height: "10%" }}>
+							<div key={item.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "12px", overflow: "hidden", height: "fit-content" }}>
+								<img src={item.src} alt={item.label} style={{ width: "100%", objectFit: "object-contain", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+								<div style={{ padding: "12px 14px" }}>
 									<div style={{ fontWeight: 700, fontSize: "13px", color: item.accent, marginBottom: "4px" }}>{item.label}</div>
 									<p style={{ margin: 0, fontSize: "11px", color: "#64748b", lineHeight: 1.6 }}>{item.desc}</p>
 								</div>
@@ -285,6 +285,7 @@
 				{ step: "02", label: "Set an Operator", desc: "Choose how to match — equals, not equals, is one of, is not one of", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Conditions.png" },
 				{ step: "03", label: "Select a Value", desc: "Pick the exact value to filter on — e.g. Priority equals MEDIUM", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Applied.png" },
 				{ step: "04", label: "Combine with AND / OR", desc: "Stack multiple conditions using AND (all must match) or OR (any can match)", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_OR_AND.png" },
+				{ step: "05", label: "Click on Apply Filter", desc: "Apply the filter to see the results", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Conditions.png" },
 			];
 
 			return (
@@ -345,7 +346,7 @@
 									["Priority", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Priority_Filter.png"],
 								].map(([label, src]) => (
 									<div key={label} style={{ borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
-										<img src={src} alt={label} style={{ width: "100%", height: "110px", objectFit: "cover", objectPosition: "top", display: "block" }} />
+										<img src={src} alt={label} style={{ width: "100%", height: "150px", objectFit: "cover", objectPosition: "top", display: "block" }} />
 										<div style={{ padding: "6px 10px", fontSize: "11px", color: "#64748b", background: "rgba(255,255,255,0.03)", textAlign: "center" }}>{label}</div>
 									</div>
 								))}
