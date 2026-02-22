@@ -270,11 +270,121 @@
 			);
 		}
 
+		function Slide4() {
+			const [activeTab, setActiveTab] = useState("basic");
+
+			const basicFilters = [
+				{ icon: "⏱️", label: "Duration", desc: "Filter by Today, This Week, This Month, This Year, or All" },
+				{ icon: "📂", label: "Assignment", desc: "Toggle between All Tasks, Assigned, or Unassigned" },
+				{ icon: "🔴", label: "Status", desc: "Filter by New, In Progress, Overdue, Completed, Blocked and more" },
+				{ icon: "🎯", label: "Priority", desc: "Filter by Critical, High, Medium, Low or Hold" },
+			];
+
+			const advancedSteps = [
+				{ step: "01", label: "Pick a Field", desc: "Choose from Task Title, Status, Priority, Assigned To, Due Date, Created By, Client, Category and more", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Fields.png" },
+				{ step: "02", label: "Set an Operator", desc: "Choose how to match — equals, not equals, is one of, is not one of", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Conditions.png" },
+				{ step: "03", label: "Select a Value", desc: "Pick the exact value to filter on — e.g. Priority equals MEDIUM", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_Applied.png" },
+				{ step: "04", label: "Combine with AND / OR", desc: "Stack multiple conditions using AND (all must match) or OR (any can match)", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Advanced_Filter_OR_AND.png" },
+			];
+
+			return (
+				<div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+
+					{/* Header */}
+					<div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+						<div>
+							<span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "10px" }}>Task Management</span>
+							<h2 style={{ fontSize: "clamp(20px,3vw,34px)", fontWeight: 800, background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "4px" }}>
+								Find Any Task, Instantly
+							</h2>
+							<p style={{ fontSize: "13px", color: "#64748b", maxWidth: "560px", lineHeight: 1.6 }}>
+								Task Offerings is your central hub for all tasks. Accessed from the top bar — available to every role. Powerful filters let you cut through the noise and focus on exactly what matters.
+							</p>
+						</div>
+						{/* How to access */}
+						<div style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.3)", borderRadius: "10px", padding: "12px 16px", fontSize: "12px", color: "#a5b4fc", textAlign: "center", flexShrink: 0 }}>
+							<div style={{ fontSize: "22px", marginBottom: "4px" }}>🗂️</div>
+							<div style={{ fontWeight: 700, marginBottom: "2px" }}>How to access</div>
+							<div style={{ color: "#64748b" }}>Click the <strong style={{ color: "#a5b4fc" }}>checklist icon</strong><br />in the top navigation bar</div>
+						</div>
+					</div>
+
+					{/* Main screenshot */}
+					<div style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)" }}>
+						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Client.png" alt="Task Management view" style={{ width: "100%", maxHeight: "180px", objectFit: "cover", objectPosition: "top", display: "block" }} />
+					</div>
+
+					{/* Tabs */}
+					<div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+						{[["basic", "🔍 Basic Filters"], ["advanced", "⚙️ Advanced Filters"]].map(([key, label]) => (
+							<button key={key} onClick={() => setActiveTab(key)} style={{ padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "12px", fontWeight: 600, transition: "all 0.2s", background: activeTab === key ? "rgba(99,102,241,0.8)" : "rgba(255,255,255,0.06)", color: activeTab === key ? "#fff" : "#64748b" }}>
+								{label}
+							</button>
+						))}
+						<span style={{ fontSize: "11px", color: "#475569", marginLeft: "8px" }}>⚙️ Advanced filters available to all roles except Clients</span>
+					</div>
+
+					{/* Basic Filters */}
+					{activeTab === "basic" && (
+						<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr))", gap: "12px" }}>
+							{basicFilters.map(f => (
+								<div key={f.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", padding: "14px 16px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
+									<span style={{ fontSize: "20px", flexShrink: 0 }}>{f.icon}</span>
+									<div>
+										<div style={{ fontWeight: 700, fontSize: "13px", color: "#e2e8f0", marginBottom: "4px" }}>{f.label}</div>
+										<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>{f.desc}</div>
+									</div>
+								</div>
+							))}
+							{/* Basic filter screenshots row */}
+							<div style={{ gridColumn: "1 / -1", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "8px" }}>
+								{[
+									["Duration", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Duration_Fitler.png"],
+									["All / Assigned", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_All_Filter.png"],
+									["Status", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Status_Filter.png"],
+									["Priority", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Priority_Filter.png"],
+								].map(([label, src]) => (
+									<div key={label} style={{ borderRadius: "8px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+										<img src={src} alt={label} style={{ width: "100%", height: "110px", objectFit: "cover", objectPosition: "top", display: "block" }} />
+										<div style={{ padding: "6px 10px", fontSize: "11px", color: "#64748b", background: "rgba(255,255,255,0.03)", textAlign: "center" }}>{label}</div>
+									</div>
+								))}
+							</div>
+						</div>
+					)}
+
+					{/* Advanced Filters */}
+					{activeTab === "advanced" && (
+						<div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+							<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))", gap: "10px" }}>
+								{advancedSteps.map(s => (
+									<div key={s.step} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", overflow: "hidden" }}>
+										<img src={s.img} alt={s.label} style={{ width: "100%", height: "110px", objectFit: "cover", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+										<div style={{ padding: "10px 12px" }}>
+											<div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+												<span style={{ background: "rgba(99,102,241,0.3)", color: "#a5b4fc", borderRadius: "6px", padding: "2px 7px", fontSize: "10px", fontWeight: 700 }}>Step {s.step}</span>
+												<span style={{ fontWeight: 700, fontSize: "12px", color: "#e2e8f0" }}>{s.label}</span>
+											</div>
+											<p style={{ margin: 0, fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>{s.desc}</p>
+										</div>
+									</div>
+								))}
+							</div>
+							<div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px", padding: "10px 14px", fontSize: "12px", color: "#94a3b8" }}>
+								💡 <strong style={{ color: "#a5b4fc" }}>Up to 15 filter conditions</strong> can be stacked simultaneously — combine any fields, operators, and values to build exactly the query you need.
+							</div>
+						</div>
+					)}
+				</div>
+			);
+		}
+
 		// ── SHELL ──────────────────────────────────────────────────
 		const slides = [
 			{ id: 1, title: "Overview", component: <Slide1 /> },
 			{ id: 2, title: "Dashboard", component: <Slide2 /> },
 			{ id: 3, title: "User Roles", component: <Slide3 /> },
+			{ id: 4, title: "Task Management", component: <Slide4 /> },
 		];
 
 		function App() {
