@@ -466,20 +466,23 @@
 		}
 		function Slide5() {
 			const [activeTab, setActiveTab] = useState("form");
+			const [activeFormStep, setActiveFormStep] = useState(0);
 
 			const formFields = [
-				{ icon: "📝", label: "Task Title", desc: "A clear name for the task" },
-				{ icon: "📄", label: "Description", desc: "Detailed context about what needs to be done" },
-				{ icon: "🎨", label: "Skills", desc: "Tag required skills (e.g. Machine Learning, Web Engineering) — searchable multi-select" },
-				{ icon: "🔄", label: "Status", desc: "New, In Progress, Review, Completed, Blocked, On Hold, Approved, Rejected and more" },
-				{ icon: "🎯", label: "Priority", desc: "Critical, High, Medium, Low or Hold" },
-				{ icon: "🗂️", label: "Task Category", desc: "Group tasks by category (e.g. General Tasks, Programming)" },
-				{ icon: "🔢", label: "Serial Number", desc: "Auto-assigned sequential ID with a customisable prefix (e.g. GT-00013)" },
-				{ icon: "⏱️", label: "Original Estimate", desc: "Time estimate using natural format — e.g. 3d 4h 5m, 2w, 60m" },
-				{ icon: "📅", label: "Due Date", desc: "Calendar date picker for the task deadline" },
-				{ icon: "📎", label: "File Attachments", desc: "Drag & drop or browse files to attach directly to the task" },
-				{ icon: "💬", label: "Initial Comment", desc: "Optional note added at creation — more comments can be added later" },
+				{ icon: "📝", label: "Task Title", desc: "A clear name for the task", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Title.png" },
+				{ icon: "📄", label: "Description", desc: "Detailed context about what needs to be done", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Description.png" },
+				{ icon: "🎨", label: "Skills", desc: "Tag required skills (e.g. Machine Learning, Web Engineering) — searchable multi-select", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Skills.png" },
+				{ icon: "🔄", label: "Status", desc: "New, In Progress, Review, Completed, Blocked, On Hold, Approved, Rejected and more", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Status.png" },
+				{ icon: "🎯", label: "Priority", desc: "Critical, High, Medium, Low or Hold", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Priority.png" },
+				{ icon: "🗂️", label: "Task Category", desc: "Group tasks by category (e.g. General Tasks, Programming)", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_TaskCategory.png" },
+				{ icon: "🔢", label: "Serial Number", desc: "Auto-assigned sequential ID with a customisable prefix (e.g. GT-00013)", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_SerialNumber.png" },
+				{ icon: "⏱️", label: "Original Estimate", desc: "Time estimate using natural format — e.g. 3d 4h 5m, 2w, 60m", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Estimate.png" },
+				{ icon: "📅", label: "Due Date", desc: "Calendar date picker for the task deadline", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_DueDate.png" },
+				{ icon: "📎", label: "File Attachments", desc: "Drag & drop or browse files to attach directly to the task", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_UploadFile.png" },
+				{ icon: "💬", label: "Initial Comment", desc: "Optional note added at creation — more comments can be added later", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Comments.png" },
 			];
+
+			const currentFormStep = formFields[activeFormStep];
 
 			const clientFlow = [
 				{ step: "1", label: "Click Create New Task", desc: "Button visible on the Task Offerings page (top right)", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_Button.png", objectFit: 'cover' },
@@ -524,17 +527,40 @@
 							<div className="task-form-image-card" style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "100%", maxWidth: "360px", justifySelf: "center", background: "rgba(15,23,42,0.6)" }}>
 								<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_flow.png" alt="Task creation form" style={{ width: "100%", height: "clamp(320px,65vh,760px)", objectFit: "contain", objectPosition: "top", display: "block" }} />
 							</div>
-							{/* Right: field list */}
-							<div className="task-form-fields" style={{ display: "flex", flexDirection: "column", gap: "10px", maxHeight: "clamp(320px,65vh,760px)", overflowY: "auto", paddingRight: "4px" }}>
-								{formFields.map(f => (
-									<div key={f.label} style={{ display: "flex", gap: "10px", alignItems: "flex-start", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "8px 12px" }}>
-										<span style={{ fontSize: "16px", flexShrink: 0, marginTop: "1px" }}>{f.icon}</span>
-										<div>
-											<div style={{ fontWeight: 700, fontSize: "12px", color: "#e2e8f0", marginBottom: "2px" }}>{f.label}</div>
-											<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.4 }}>{f.desc}</div>
+							{/* Right: step slider + field list */}
+							<div className="task-form-fields" style={{ display: "flex", flexDirection: "column", gap: "10px", paddingRight: "4px" }}>
+								<div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", overflow: "hidden" }}>
+									{currentFormStep.img ? (
+										<img src={currentFormStep.img} alt={currentFormStep.label + " screenshot"} style={{ width: "100%", height: "clamp(170px,30vw,250px)", objectFit: "contain", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+									) : (
+										<div style={{ height: "clamp(170px,30vw,250px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "12px", color: "#64748b", fontSize: "12px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "linear-gradient(180deg, rgba(15,23,42,0.6), rgba(15,23,42,0.85))" }}>
+											No screenshot available for this step yet.
 										</div>
+									)}
+									<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+										<button onClick={() => setActiveFormStep(i => Math.max(0, i - 1))} disabled={activeFormStep === 0} style={{ padding: "6px 10px", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: activeFormStep === 0 ? "#334155" : "#94a3b8", cursor: activeFormStep === 0 ? "not-allowed" : "pointer", fontSize: "11px" }}>← Prev</button>
+										<div style={{ fontSize: "11px", color: "#94a3b8", textAlign: "center" }}>Step {activeFormStep + 1} / {formFields.length} • {currentFormStep.label}</div>
+										<button onClick={() => setActiveFormStep(i => Math.min(formFields.length - 1, i + 1))} disabled={activeFormStep === formFields.length - 1} style={{ padding: "6px 10px", borderRadius: "6px", border: "none", background: activeFormStep === formFields.length - 1 ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.8)", color: "#fff", cursor: activeFormStep === formFields.length - 1 ? "not-allowed" : "pointer", fontSize: "11px", fontWeight: 600 }}>Next →</button>
 									</div>
-								))}
+									<div style={{ display: "flex", gap: "6px", alignItems: "center", justifyContent: "center", padding: "8px 12px" }}>
+										{formFields.map((_, i) => (
+											<div key={i} onClick={() => setActiveFormStep(i)} style={{ width: i === activeFormStep ? "18px" : "6px", height: "6px", borderRadius: "999px", background: i === activeFormStep ? "#6366f1" : "#334155", cursor: "pointer", transition: "all 0.25s" }} />
+										))}
+									</div>
+								</div>
+
+								<div style={{ maxHeight: "clamp(200px,32vh,360px)", overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px", paddingRight: "2px" }}>
+									{formFields.map((f, index) => (
+										<div key={f.label} onClick={() => setActiveFormStep(index)} style={{ display: "flex", gap: "10px", alignItems: "flex-start", background: index === activeFormStep ? "rgba(99,102,241,0.12)" : "rgba(255,255,255,0.03)", border: index === activeFormStep ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "8px 12px", cursor: "pointer" }}>
+											<span style={{ fontSize: "16px", flexShrink: 0, marginTop: "1px" }}>{f.icon}</span>
+											<div>
+												<div style={{ fontWeight: 700, fontSize: "12px", color: "#e2e8f0", marginBottom: "2px" }}>{f.label}</div>
+												<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.4 }}>{f.desc}</div>
+												<div style={{ fontSize: "10px", color: f.img ? "#34d399" : "#475569", marginTop: "4px" }}>{f.img ? "Screenshot available" : "Screenshot pending"}</div>
+											</div>
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					)}
