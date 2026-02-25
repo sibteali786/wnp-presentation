@@ -50,7 +50,8 @@
 			}
 
 			.slide2-dual-grid,
-			.slide3-layout {
+			.slide3-layout,
+			.slide6-tab-layout {
 				grid-template-columns: 1fr !important;
 			}
 
@@ -611,6 +612,204 @@
 				</div>
 			);
 		}
+		function Slide6() {
+			const [activeTab, setActiveTab] = useState("comments");
+			const [commentStep, setCommentStep] = useState(0);
+			const [linksStep, setLinksStep] = useState(0);
+			const [worklogStep, setWorklogStep] = useState(0);
+
+			const commentFeatures = [
+				{ icon: "B", label: "Bold / Italic", desc: "Standard text formatting for emphasis", step: 0 },
+				{ icon: "{ }", label: "Code Blocks", desc: "Syntax-highlighted blocks supporting JS, TS, Python, HTML, CSS, JSON, SQL, Bash and more", step: 2 },
+				{ icon: "<>", label: "Inline Code", desc: "Quick inline code snippets using backtick", step: 5 },
+				{ icon: "❝", label: "Quotes", desc: "Blockquote formatting for referencing", step: 0 },
+				{ icon: "🔗", label: "Links", desc: "Embed clickable URLs directly in comments", step: 4 },
+				{ icon: "•", label: "Lists", desc: "Bullet and numbered lists supported", step: 0 },
+				{ icon: "@", label: "Mentions", desc: "Type @ to mention and notify a team member", step: 0 },
+				{ icon: "📎", label: "File Attachments", desc: "Attach up to 5 files per comment", step: 6 },
+				{ icon: "⌨️", label: "Keyboard Shortcuts", desc: "Full shortcut support — Cmd+B, Cmd+K, Cmd+Enter to send and more", step: 3 },
+			];
+
+			const linkFeatures = [
+				{ icon: "🔍", label: "Auto-extracted", desc: "Links pasted in comments are automatically detected and appear in the Links tab — no manual work needed", step: 0 },
+				{ icon: "➕", label: "Manually Added", desc: "Add any URL directly via '+ Add Link'. Page title and favicon are fetched automatically", step: 1 },
+				{ icon: "🗑️", label: "Deletion Rules", desc: "Manually added links can be deleted directly. Comment-sourced links are removed when the comment is deleted", step: 4 },
+				{ icon: "↗️", label: "Open in New Tab", desc: "Click the external link icon to open any link without leaving the task", step: 3 },
+			];
+
+			const worklogFeatures = [
+				{ icon: "⏱️", label: "Log Time", desc: "Click 'Log Time' and enter time spent using natural format: 2h 30m, 1d, 3w etc.", step: 1 },
+				{ icon: "📊", label: "Progress Bar", desc: "Visual progress bar shows how much of the original estimate has been completed (e.g. 13% complete)", step: 3 },
+				{ icon: "🔢", label: "Remaining Time", desc: "Remaining time is auto-calculated from the original estimate minus all logged entries", step: 3 },
+				{ icon: "📅", label: "Date & Time", desc: "Each log captures the exact date and time work started for accurate reporting", step: 2 },
+				{ icon: "💬", label: "Work Description", desc: "Rich text description can be added to each log entry — same editor as comments", step: 2 },
+				{ icon: "✏️", label: "Edit / Delete", desc: "Each log entry can be edited or permanently deleted (with confirmation prompt)", step: 5 },
+				{ icon: "🔄", label: "Multiple Logs", desc: "Log time across multiple sessions — all entries stack and remaining time updates after each", step: 9 },
+				{ icon: "👁️", label: "Compact / Verbose", desc: "Toggle between compact (quick scan) and verbose (full detail) display modes", step: 4 },
+			];
+
+			const tabs = [
+				{ key: "comments", label: "💬 Comments" },
+				{ key: "links", label: "🔗 Links" },
+				{ key: "worklog", label: "⏱️ Work Log" },
+			];
+
+			const commentSteps = [
+				{ label: "Start writing comment", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_Start.png", objectFit: "contain" },
+				{ label: "Code block language picker", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_CodeBlock_Language_Selection.png", objectFit: "contain" },
+				{ label: "Code block in comment", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_CodeBlock.png", objectFit: "contain" },
+				{ label: "Keyboard shortcuts", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_Shortcuts.png", objectFit: "contain" },
+				{ label: "Links in comments", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_Links.png", objectFit: "contain" },
+				{ label: "Inline code", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_InlineCode.png", objectFit: "contain" },
+				{ label: "File attachments", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_FileAttachments.png", objectFit: "contain" },
+				{ label: "Final comment added", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskComments_FinalComment_Added.png", objectFit: "contain" },
+			];
+
+			const linksSteps = [
+				{ label: "Links tab overview", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskDetails_Links.png", objectFit: "contain" },
+				{ label: "Add link modal", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskDetails_AddLink.png", objectFit: "contain" },
+				{ label: "Link added", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskDetails_LinkAdded.png", objectFit: "contain" },
+				{ label: "Open external link", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskDetails_OpenLink.png", objectFit: "contain" },
+				{ label: "Delete link", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskDetails_DeleteLink.png", objectFit: "contain" },
+			];
+
+			const worklogSteps = [
+				{ label: "Worklog overview", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_Overview.png", objectFit: "contain" },
+				{ label: "All fields", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_AllFields.png", objectFit: "contain" },
+				{ label: "Filled fields", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_FilledFields.png", objectFit: "contain" },
+				{ label: "New log added", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_NewLogAdded.png", objectFit: "contain" },
+				{ label: "Compact mode", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_CompactMode.png", objectFit: "contain" },
+				{ label: "Edit screen", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_EditScreen.png", objectFit: "contain" },
+				{ label: "No comments in logs", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_NoCommentsInLogs.png", objectFit: "contain" },
+				{ label: "Delete confirmation", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_DeleteConfirmation.png", objectFit: "contain" },
+				{ label: "Deleted log", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_Delete.png", objectFit: "contain" },
+				{ label: "Multiple logs", img: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskWorklogs_MultipleLogs.png", objectFit: "contain" },
+			];
+
+			const renderSliderPanel = (steps, activeStep, setActiveStep) => {
+				const currentStep = steps[activeStep] || {};
+				return (
+					<div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", overflow: "hidden" }}>
+						{currentStep.img ? (
+							<img src={currentStep.img} alt={currentStep.label || "step screenshot"} style={{ width: "100%", height: "clamp(190px,33vw,300px)", objectFit: currentStep.objectFit || "cover", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+						) : (
+							<div style={{ height: "clamp(190px,33vw,300px)", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "12px", color: "#64748b", fontSize: "12px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "linear-gradient(180deg, rgba(15,23,42,0.6), rgba(15,23,42,0.85))" }}>
+								No screenshot available for this step yet.
+							</div>
+						)}
+						<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+							<button onClick={() => setActiveStep(i => Math.max(0, i - 1))} disabled={activeStep === 0} style={{ padding: "6px 10px", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: activeStep === 0 ? "#334155" : "#94a3b8", cursor: activeStep === 0 ? "not-allowed" : "pointer", fontSize: "11px" }}>← Prev</button>
+							<div style={{ fontSize: "11px", color: "#94a3b8", textAlign: "center" }}>Step {activeStep + 1} / {steps.length} • {currentStep.label}</div>
+							<button onClick={() => setActiveStep(i => Math.min(steps.length - 1, i + 1))} disabled={activeStep === steps.length - 1} style={{ padding: "6px 10px", borderRadius: "6px", border: "none", background: activeStep === steps.length - 1 ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.8)", color: "#fff", cursor: activeStep === steps.length - 1 ? "not-allowed" : "pointer", fontSize: "11px", fontWeight: 600 }}>Next →</button>
+						</div>
+						<div style={{ display: "flex", gap: "6px", alignItems: "center", justifyContent: "center", padding: "8px 12px" }}>
+							{steps.map((_, i) => (
+								<div key={i} onClick={() => setActiveStep(i)} style={{ width: i === activeStep ? "18px" : "6px", height: "6px", borderRadius: "999px", background: i === activeStep ? "#6366f1" : "#334155", cursor: "pointer", transition: "all 0.25s" }} />
+							))}
+						</div>
+					</div>
+				);
+			};
+
+			return (
+				<div className="slide-content" style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+
+					{/* Header */}
+					<div>
+						<span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "10px" }}>Task Details</span>
+						<h2 style={{ fontSize: "clamp(20px,3vw,34px)", fontWeight: 800, background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "4px" }}>
+							Inside a Task
+						</h2>
+						<p style={{ fontSize: "13px", color: "#64748b", maxWidth: "640px", lineHeight: 1.6 }}>
+							Click any task row to open its detail view. Every task has three tabs at the bottom — <strong style={{ color: "#a5b4fc" }}>Comments</strong>, <strong style={{ color: "#a5b4fc" }}>Links</strong>, and <strong style={{ color: "#a5b4fc" }}>Work Log</strong> — giving you full context, history, and time tracking in one place.
+						</p>
+					</div>
+
+					{/* Tab bar */}
+					<div style={{ display: "flex", gap: "8px" }}>
+						{tabs.map(t => (
+							<button key={t.key} onClick={() => setActiveTab(t.key)} style={{ padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "12px", fontWeight: 600, transition: "all 0.2s", background: activeTab === t.key ? "rgba(99,102,241,0.8)" : "rgba(255,255,255,0.06)", color: activeTab === t.key ? "#fff" : "#64748b" }}>
+								{t.label}
+							</button>
+						))}
+					</div>
+
+					{/* ── COMMENTS TAB ── */}
+					{activeTab === "comments" && (
+						<div className="slide6-tab-layout" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "16px", flex: 1, alignItems: "start" }}>
+							{renderSliderPanel(commentSteps, commentStep, setCommentStep)}
+							{/* Right: feature list */}
+							<div style={{ display: "flex", flexDirection: "column", gap: "6px", overflowY: "auto", maxHeight: "360px", paddingRight: "4px" }}>
+								<div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px", padding: "8px 10px", fontSize: "11px", color: "#a5b4fc" }}>
+									💡 Tip: click any feature card to jump to its related screenshot.
+								</div>
+								{commentFeatures.map(f => (
+									<div key={f.label} onClick={() => setCommentStep(f.step)} style={{ display: "flex", gap: "10px", alignItems: "flex-start", background: commentStep === f.step ? "rgba(99,102,241,0.12)" : "rgba(255,255,255,0.03)", border: commentStep === f.step ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "8px 12px", cursor: "pointer" }}>
+										<span style={{ fontSize: "13px", fontWeight: 800, color: "#818cf8", flexShrink: 0, minWidth: "24px", marginTop: "1px" }}>{f.icon}</span>
+										<div>
+											<div style={{ fontWeight: 700, fontSize: "12px", color: "#e2e8f0", marginBottom: "2px" }}>{f.label}</div>
+											<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.4 }}>{f.desc}</div>
+										</div>
+									</div>
+								))}
+							</div>
+						</div>
+					)}
+
+					{/* ── LINKS TAB ── */}
+					{activeTab === "links" && (
+						<div className="slide6-tab-layout" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", flex: 1, alignItems: "start" }}>
+							{renderSliderPanel(linksSteps, linksStep, setLinksStep)}
+							{/* Right: feature list */}
+							<div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+								<div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px", padding: "8px 10px", fontSize: "11px", color: "#a5b4fc" }}>
+									💡 Tip: click any feature card to jump to its related screenshot.
+								</div>
+								{linkFeatures.map(f => (
+									<div key={f.label} onClick={() => setLinksStep(f.step)} style={{ display: "flex", gap: "12px", alignItems: "flex-start", background: linksStep === f.step ? "rgba(99,102,241,0.12)" : "rgba(255,255,255,0.03)", border: linksStep === f.step ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "12px 14px", cursor: "pointer" }}>
+										<span style={{ fontSize: "20px", flexShrink: 0 }}>{f.icon}</span>
+										<div>
+											<div style={{ fontWeight: 700, fontSize: "13px", color: "#e2e8f0", marginBottom: "4px" }}>{f.label}</div>
+											<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>{f.desc}</div>
+										</div>
+									</div>
+								))}
+								<div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px", padding: "10px 14px", fontSize: "11px", color: "#94a3b8" }}>
+									💡 Paste a URL anywhere in a comment and it auto-appears in the Links tab — page title and icon fetched automatically.
+								</div>
+							</div>
+						</div>
+					)}
+
+					{/* ── WORK LOG TAB ── */}
+					{activeTab === "worklog" && (
+						<div className="slide6-tab-layout" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", flex: 1, alignItems: "start" }}>
+							{renderSliderPanel(worklogSteps, worklogStep, setWorklogStep)}
+							{/* Right: feature list */}
+							<div style={{ display: "flex", flexDirection: "column", gap: "6px", overflowY: "auto", maxHeight: "360px", paddingRight: "4px" }}>
+								<div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "8px", padding: "8px 10px", fontSize: "11px", color: "#a5b4fc" }}>
+									💡 Tip: click any feature card to jump to its related screenshot.
+								</div>
+								{worklogFeatures.map(f => (
+									<div key={f.label} onClick={() => setWorklogStep(f.step)} style={{ display: "flex", gap: "10px", alignItems: "flex-start", background: worklogStep === f.step ? "rgba(99,102,241,0.12)" : "rgba(255,255,255,0.03)", border: worklogStep === f.step ? "1px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "8px 12px", cursor: "pointer" }}>
+										<span style={{ fontSize: "16px", flexShrink: 0, marginTop: "1px" }}>{f.icon}</span>
+										<div>
+											<div style={{ fontWeight: 700, fontSize: "12px", color: "#e2e8f0", marginBottom: "2px" }}>{f.label}</div>
+											<div style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.4 }}>{f.desc}</div>
+										</div>
+									</div>
+								))}
+								<div style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "8px", padding: "10px 14px", fontSize: "11px", color: "#34d399" }}>
+									📈 Project managers can monitor effort distribution across the team and use logged time to estimate future tasks more accurately.
+								</div>
+							</div>
+						</div>
+					)}
+
+				</div>
+			);
+		}
+
 
 		// ── SHELL ──────────────────────────────────────────────────
 		const slides = [
@@ -619,6 +818,8 @@
 			{ id: 3, title: "User Roles", component: <Slide3 /> },
 			{ id: 4, title: "Task Management", component: <Slide4 /> },
 			{ id: 5, title: "Task Creation", component: <Slide5 /> },
+			{ id: 6, title: "Task Details", component: <Slide6 /> },
+
 		];
 
 		function App() {
