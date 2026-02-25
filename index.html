@@ -27,6 +27,10 @@
 			font-family: inherit;
 		}
 
+		.slide-content {
+			padding: clamp(20px, 3.2vw, 40px) !important;
+		}
+
 		::-webkit-scrollbar {
 			width: 4px;
 		}
@@ -45,6 +49,49 @@
 				grid-template-columns: 1fr !important;
 			}
 
+			.slide2-dual-grid,
+			.slide3-layout {
+				grid-template-columns: 1fr !important;
+			}
+
+			.top-nav {
+				flex-wrap: wrap;
+				gap: 8px;
+				padding: 10px 14px !important;
+			}
+
+			.top-nav-brand {
+				width: 100%;
+			}
+
+			.top-nav-tabs {
+				order: 3;
+				width: 100%;
+				overflow-x: auto;
+				padding-bottom: 2px;
+			}
+
+			.top-nav-counter {
+				margin-left: auto;
+			}
+
+			.bottom-nav {
+				flex-wrap: wrap;
+				gap: 10px;
+				padding: 12px 14px !important;
+			}
+
+			.bottom-nav-button {
+				flex: 1 1 130px;
+				min-height: 40px;
+			}
+
+			.bottom-nav-dots {
+				order: 3;
+				width: 100%;
+				justify-content: center;
+			}
+
 			.task-form-image-card {
 				max-width: 100% !important;
 			}
@@ -52,6 +99,29 @@
 			.task-form-fields {
 				max-height: none !important;
 				overflow: visible !important;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.slide-content {
+				padding: 16px 14px !important;
+			}
+
+			.slide-content h1 {
+				font-size: clamp(24px, 9vw, 36px) !important;
+			}
+
+			.slide-content h2 {
+				font-size: clamp(20px, 6.8vw, 30px) !important;
+			}
+
+			.slide-content p {
+				font-size: 12px !important;
+				line-height: 1.55 !important;
+			}
+
+			.slide-content button {
+				font-size: 12px !important;
 			}
 		}
 	</style>
@@ -87,7 +157,7 @@
 			const [activeTab, setActiveTab] = useState("features");
 			const items = activeTab === "features" ? features : roles;
 			return (
-				<div style={{ padding: "40px", flex: 1, display: "flex", flexDirection: "column" }}>
+				<div className="slide-content" style={{ padding: "40px", flex: 1, display: "flex", flexDirection: "column" }}>
 					<div style={{ textAlign: "center", marginBottom: "28px" }}>
 						<span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "14px" }}>
 							Internal Platform
@@ -133,7 +203,7 @@
 		// ── SLIDE 2 ────────────────────────────────────────────────
 		function Slide2() {
 			return (
-				<div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "18px" }}>
+				<div className="slide-content" style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "18px" }}>
 					<div>
 						<span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "10px" }}>Dashboard</span>
 						<h2 style={{ fontSize: "clamp(22px,3vw,36px)", fontWeight: 800, background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "6px" }}>
@@ -145,8 +215,8 @@
 					</div>
 
 					{/* Main screenshot */}
-					<div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", width: 'fit-content' }}>
-						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ maxHeight: "50vw", objectFit: "object-contain", objectPosition: "top", display: "block" }} />
+					<div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", width: "100%", maxWidth: "980px" }}>
+						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ width: "100%", height: "auto", maxHeight: "clamp(220px,50vw,520px)", objectFit: "contain", objectPosition: "top", display: "block" }} />
 						<div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
 							{[["📋 Task Summary", "#6366f1"], ["💬 Integrated Chat", "#8b5cf6"], ["👥 Active Clients", "#0ea5e9"]].map(([label, color]) => (
 								<span key={label} style={{ background: color, borderRadius: "999px", padding: "3px 10px", fontSize: "10px", fontWeight: 600, color: "#fff", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>{label}</span>
@@ -155,7 +225,7 @@
 					</div>
 
 					{/* Kanban + Gantt */}
-					<div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
+					<div className="slide2-dual-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" }}>
 						{[
 							{ src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_2.png", label: "📋 Kanban Board", desc: "Visualize every task by status — New, In Progress, Review, Completed, Blocked. Drag and drop to update instantly.", accent: "#818cf8" },
 							{ src: "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashboard_3.png", label: "🗓️ Timeline / Gantt", desc: "See all tasks plotted across a calendar. Spot delays, overlaps, and deadlines at a single glance.", accent: "#c084fc" },
@@ -221,7 +291,7 @@
 			const role = roleData[activeRole];
 
 			return (
-				<div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "18px" }}>
+				<div className="slide-content" style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "18px" }}>
 					{/* Header */}
 					<div>
 						<span style={{ display: "inline-block", background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.4)", borderRadius: "999px", padding: "4px 16px", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "10px" }}>User Roles</span>
@@ -250,7 +320,7 @@
 					</div>
 
 					{/* Content */}
-					<div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "20px", flex: 1 }}>
+					<div className="slide3-layout" style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "20px", flex: 1 }}>
 						{/* Left — info */}
 						<div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
 							<div>
@@ -304,7 +374,7 @@
 			];
 
 			return (
-				<div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+				<div className="slide-content" style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
 
 					{/* Header */}
 					<div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
@@ -425,7 +495,7 @@
 			];
 
 			return (
-				<div style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+				<div className="slide-content" style={{ padding: "28px 40px", flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
 
 					{/* Header */}
 					<div>
@@ -451,7 +521,7 @@
 					{activeTab === "form" && (
 						<div className="task-form-layout" style={{ display: "grid", gridTemplateColumns: "minmax(280px,0.9fr) minmax(0,1.1fr)", gap: "12px", alignItems: "start" }}>
 							{/* Left: screenshot */}
-							<div className="task-form-image-card" style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "fit-content", maxWidth: "360px", justifySelf: "center", background: "rgba(15,23,42,0.6)" }}>
+							<div className="task-form-image-card" style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "100%", maxWidth: "360px", justifySelf: "center", background: "rgba(15,23,42,0.6)" }}>
 								<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_flow.png" alt="Task creation form" style={{ width: "100%", height: "clamp(320px,65vh,760px)", objectFit: "contain", objectPosition: "top", display: "block" }} />
 							</div>
 							{/* Right: field list */}
@@ -498,10 +568,10 @@
 							<div style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", borderRadius: "8px", padding: "10px 14px", fontSize: "12px", color: "#34d399" }}>
 								✅ Task Supervisors, Super Users and Task Agents get two extra fields at creation — <strong>Assigned User</strong> and <strong>Client</strong>.
 							</div>
-							<div style={{ display: "flex", gap: "12px", justifyContent: 'space-evenly' }}>
+							<div style={{ display: "flex", gap: "12px", justifyContent: 'space-evenly', flexWrap: "wrap" }}>
 								{supervisorExtras.map(item => (
-									<div key={item.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", overflow: "hidden", width: 'fit-content' }}>
-										<img src={item.img} alt={item.label} style={{ width: "100%", height: "300px", objectFit: "cover", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
+									<div key={item.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", overflow: "hidden", width: "100%", maxWidth: "320px", flex: "1 1 260px" }}>
+										<img src={item.img} alt={item.label} style={{ width: "100%", height: "clamp(220px,40vw,300px)", objectFit: "cover", objectPosition: "top", display: "block", borderBottom: "1px solid rgba(255,255,255,0.06)" }} />
 										<div style={{ padding: "12px 14px" }}>
 											<div style={{ fontWeight: 700, fontSize: "13px", color: "#818cf8", marginBottom: "4px" }}>{item.icon} {item.label}</div>
 											<p style={{ margin: 0, fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>{item.desc}</p>
@@ -532,19 +602,19 @@
 			return (
 				<div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%)", display: "flex", flexDirection: "column" }}>
 					{/* Top nav */}
-					<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 28px", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(10px)", position: "sticky", top: 0, zIndex: 10 }}>
-						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+					<div className="top-nav" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 28px", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(10px)", position: "sticky", top: 0, zIndex: 10 }}>
+						<div className="top-nav-brand" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 							<span style={{ fontWeight: 800, fontSize: "14px", background: "linear-gradient(90deg,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>WhatsNextPlease</span>
 							<span style={{ color: "#334155", fontSize: "12px" }}>— Internal Presentation</span>
 						</div>
-						<div style={{ display: "flex", gap: "6px" }}>
+						<div className="top-nav-tabs" style={{ display: "flex", gap: "6px" }}>
 							{slides.map((s, i) => (
 								<button key={s.id} onClick={() => setCurrent(i)} style={{ padding: "4px 14px", borderRadius: "999px", border: "none", cursor: "pointer", fontSize: "11px", fontWeight: 600, background: current === i ? "rgba(99,102,241,0.8)" : "rgba(255,255,255,0.07)", color: current === i ? "#fff" : "#64748b", transition: "all 0.2s" }}>
 									{s.title}
 								</button>
 							))}
 						</div>
-						<span style={{ fontSize: "11px", color: "#334155" }}>{current + 1} / {total}</span>
+						<span className="top-nav-counter" style={{ fontSize: "11px", color: "#334155" }}>{current + 1} / {total}</span>
 					</div>
 
 					{/* Slide */}
@@ -553,16 +623,16 @@
 					</div>
 
 					{/* Bottom nav */}
-					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 28px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-						<button onClick={() => setCurrent(c => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "8px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: current === 0 ? "#334155" : "#94a3b8", cursor: current === 0 ? "not-allowed" : "pointer", fontSize: "13px" }}>
+					<div className="bottom-nav" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 28px", borderTop: "1px solid rgba(255,255,255,0.07)", position: "sticky", bottom: 0, zIndex: 10, background: "rgba(15,23,42,0.9)", backdropFilter: "blur(10px)" }}>
+						<button className="bottom-nav-button" onClick={() => setCurrent(c => Math.max(0, c - 1))} disabled={current === 0} style={{ padding: "8px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.12)", background: "transparent", color: current === 0 ? "#334155" : "#94a3b8", cursor: current === 0 ? "not-allowed" : "pointer", fontSize: "13px" }}>
 							← Previous
 						</button>
-						<div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+						<div className="bottom-nav-dots" style={{ display: "flex", gap: "6px", alignItems: "center" }}>
 							{slides.map((_, i) => (
 								<div key={i} onClick={() => setCurrent(i)} style={{ width: i === current ? "20px" : "6px", height: "6px", borderRadius: "999px", background: i === current ? "#6366f1" : "#334155", cursor: "pointer", transition: "all 0.3s" }} />
 							))}
 						</div>
-						<button onClick={() => setCurrent(c => Math.min(total - 1, c + 1))} disabled={current === total - 1} style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: current === total - 1 ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.8)", color: "#fff", cursor: current === total - 1 ? "not-allowed" : "pointer", fontSize: "13px", fontWeight: 600 }}>
+						<button className="bottom-nav-button" onClick={() => setCurrent(c => Math.min(total - 1, c + 1))} disabled={current === total - 1} style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: current === total - 1 ? "rgba(99,102,241,0.3)" : "rgba(99,102,241,0.8)", color: "#fff", cursor: current === total - 1 ? "not-allowed" : "pointer", fontSize: "13px", fontWeight: 600 }}>
 							Next →
 						</button>
 					</div>
