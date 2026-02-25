@@ -39,6 +39,21 @@
 			background: #334155;
 			border-radius: 999px;
 		}
+
+		@media (max-width: 1024px) {
+			.task-form-layout {
+				grid-template-columns: 1fr !important;
+			}
+
+			.task-form-image-card {
+				max-width: 100% !important;
+			}
+
+			.task-form-fields {
+				max-height: none !important;
+				overflow: visible !important;
+			}
+		}
 	</style>
 </head>
 
@@ -131,7 +146,7 @@
 
 					{/* Main screenshot */}
 					<div style={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", width: 'fit-content' }}>
-						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ maxHeight: "600px", objectFit: "object-contain", objectPosition: "top", display: "block" }} />
+						<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/Dashbaord_1.png" alt="Dashboard overview" style={{ maxHeight: "50vw", objectFit: "object-contain", objectPosition: "top", display: "block" }} />
 						<div style={{ position: "absolute", top: "10px", left: "10px", display: "flex", gap: "6px", flexWrap: "wrap" }}>
 							{[["📋 Task Summary", "#6366f1"], ["💬 Integrated Chat", "#8b5cf6"], ["👥 Active Clients", "#0ea5e9"]].map(([label, color]) => (
 								<span key={label} style={{ background: color, borderRadius: "999px", padding: "3px 10px", fontSize: "10px", fontWeight: 600, color: "#fff", boxShadow: "0 2px 6px rgba(0,0,0,0.4)" }}>{label}</span>
@@ -259,8 +274,8 @@
 						</div>
 
 						{/* Right — screenshot */}
-						<div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", position: "relative" }}>
-							<img src={role.img} alt={role.label + " dashboard"} style={{ width: "100%", height: "100%", objectFit: "object-contain", objectPosition: "top", display: "block", minHeight: "260px" }} />
+						<div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.5)", position: "relative", height: 'fit-content' }}>
+							<img src={role.img} alt={role.label + " dashboard"} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", maxHeight: "320px" }} />
 							<div style={{ position: "absolute", bottom: "12px", left: "12px", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(6px)", border: `1px solid ${role.color}44`, borderRadius: "8px", padding: "6px 12px", fontSize: "12px", color: role.color, fontWeight: 600 }}>
 								{role.icon} {role.label} View
 							</div>
@@ -338,7 +353,7 @@
 								</div>
 							))}
 							{/* Basic filter screenshots row */}
-							<div style={{ gridColumn: "1 / -1", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "8px" }}>
+							<div style={{ gridColumn: "1 / -1", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px,1fr))", gap: "8px" }}>
 								{[
 									["Duration", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_Duration_Fitler.png"],
 									["All / Assigned", "https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskManagement_All_Filter.png"],
@@ -434,13 +449,13 @@
 
 					{/* Form Fields Tab */}
 					{activeTab === "form" && (
-						<div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "12px" }}>
+						<div className="task-form-layout" style={{ display: "grid", gridTemplateColumns: "minmax(280px,0.9fr) minmax(0,1.1fr)", gap: "12px", alignItems: "start" }}>
 							{/* Left: screenshot */}
-							<div style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: 'fit-content' }}>
-								<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_flow.png" alt="Task creation form" style={{ width: "100%", objectFit: "contain", objectPosition: "top", display: "block", minHeight: "300px" }} />
+							<div className="task-form-image-card" style={{ borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)", width: "fit-content", maxWidth: "360px", justifySelf: "center", background: "rgba(15,23,42,0.6)" }}>
+								<img src="https://wnp-presentation-media.s3.us-east-1.amazonaws.com/TaskCreation_flow.png" alt="Task creation form" style={{ width: "100%", height: "clamp(320px,65vh,760px)", objectFit: "contain", objectPosition: "top", display: "block" }} />
 							</div>
 							{/* Right: field list */}
-							<div style={{ display: "flex", flexDirection: "column", gap: "60px", overflowY: "auto", paddingRight: "4px" }}>
+							<div className="task-form-fields" style={{ display: "flex", flexDirection: "column", gap: "10px", maxHeight: "clamp(320px,65vh,760px)", overflowY: "auto", paddingRight: "4px" }}>
 								{formFields.map(f => (
 									<div key={f.label} style={{ display: "flex", gap: "10px", alignItems: "flex-start", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "8px", padding: "8px 12px" }}>
 										<span style={{ fontSize: "16px", flexShrink: 0, marginTop: "1px" }}>{f.icon}</span>
